@@ -1,0 +1,70 @@
+   1              	# file: decode4x16.s
+   2              	# author: Justin Johnson, Tyler French
+   3              	# team w4
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	.include "src/gpio_regs.inc"
+   1              	# file: gpio_regs.inc
+   2              	
+   3              		.equ GPIOA_BASE, 0x40020000
+   4              		.equ GPIOB_BASE, 0x40020400
+   5              		.equ GPIOC_BASE, 0x40020800
+   6              		.equ GPIOD_BASE, 0x40020c00
+   7              		.equ GPIOE_BASE, 0x40021000
+   8              	
+   9              		.equ GPIO_MODER, 0x00
+  10              		.equ GPIO_OTYPER, 0x04
+  11              		.equ GPIO_OSPEEDR, 0x08
+  12              		.equ GPIO_PUPDR, 0x0c
+  13              		.equ GPIO_IDR, 0x10
+  14              		.equ GPIO_ODR, 0x14
+  15              		.equ GPIO_BSRR, 0x18
+  16              		.equ GPIO_LCKR, 0x1c
+  17              		.equ GPIO_AFRL, 0x20
+  18              		.equ GPIO_AFRH, 0x24
+  19              	
+  20              	
+   7              	
+   8              	  SET_TARGET
+   9              	
+  10              	  .text
+  11              	
+  12              	  FUNCTION decode4x16,global
+  13              	
+  14 0000 10B5     	    push {r4,lr}
+  15              	
+  16 0002 4FF00101 	    mov r1,#0b1
+  17 0006 01FA00F0 	    lsl r0,r1,r0
+  18              	
+  19 000a BDE81040 	    pop {r4,lr}
+  20              	
+  21 000e 7047     	    bx lr
+  22              	
+  23              	  ENDFUNC decode4x16
+  24              	
+  25              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+ ./src/gpio_regs.inc:3      *ABS*:40020000 GPIOA_BASE
+ ./src/gpio_regs.inc:4      *ABS*:40020400 GPIOB_BASE
+ ./src/gpio_regs.inc:5      *ABS*:40020800 GPIOC_BASE
+ ./src/gpio_regs.inc:6      *ABS*:40020c00 GPIOD_BASE
+ ./src/gpio_regs.inc:7      *ABS*:40021000 GPIOE_BASE
+ ./src/gpio_regs.inc:9      *ABS*:00000000 GPIO_MODER
+ ./src/gpio_regs.inc:10     *ABS*:00000004 GPIO_OTYPER
+ ./src/gpio_regs.inc:11     *ABS*:00000008 GPIO_OSPEEDR
+ ./src/gpio_regs.inc:12     *ABS*:0000000c GPIO_PUPDR
+ ./src/gpio_regs.inc:13     *ABS*:00000010 GPIO_IDR
+ ./src/gpio_regs.inc:14     *ABS*:00000014 GPIO_ODR
+ ./src/gpio_regs.inc:15     *ABS*:00000018 GPIO_BSRR
+ ./src/gpio_regs.inc:16     *ABS*:0000001c GPIO_LCKR
+ ./src/gpio_regs.inc:17     *ABS*:00000020 GPIO_AFRL
+ ./src/gpio_regs.inc:18     *ABS*:00000024 GPIO_AFRH
+    src/decode4x16.s:12     .text:00000000 decode4x16
+    src/decode4x16.s:12     .text:00000000 $t
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

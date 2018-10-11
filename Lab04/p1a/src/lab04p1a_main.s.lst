@@ -1,0 +1,45 @@
+   1              	// file: lab04p1a_main.s
+   2              	// author: <your-name>
+   3              	
+   4              	  .include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   5              	
+   6              	  SET_TARGET
+   7              	
+   8              	  .text
+   9              	  
+  10              	  FUNCTION main,global
+  11              	
+  12 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  13              	
+  14 0002 034C     	      ldr  r4,=AFN
+  15 0004 2568     	      ldr  r5,[r4]
+  16              	
+  17 0006 00BF     	    all_done: nop
+  18              	
+  19 0008 BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  20              	  
+  21 000c 7047     	      bx lr
+  22              	
+  23 000e 00000400 	  ENDFUNC main
+  23      0000
+  24              	
+  25              	  .data
+  26              	
+  27 0000 BBBBBBBB 	      .word	0xbbbbbbbb
+  28 0004 78563412 	AFN:	.word	305419896
+  29 0008 EEEEEEEE 	      .word	0xeeeeeeee
+  30              	
+  31              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+ src/lab04p1a_main.s:10     .text:00000000 main
+ src/lab04p1a_main.s:10     .text:00000000 $t
+ src/lab04p1a_main.s:28     .data:00000004 AFN
+ src/lab04p1a_main.s:17     .text:00000006 all_done
+ src/lab04p1a_main.s:23     .text:0000000e $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

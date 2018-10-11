@@ -1,0 +1,58 @@
+   1              	# file: main_asm.s
+   2              	# team w4
+   3              	# authors: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              		.equ GPIOD_BASE, 0x40020c00 
+  12              		.equ GPIO_MODER, 0x00
+  13              		.equ GPIO_ODR, 0x14
+  14              	
+  15              	  FUNCTION main,global
+  16              	
+  17 0000 F0B5     	    push {r4,r5,r6,r7,lr}			//push registers onto the stack
+  18              	
+  19 0002 054C     	    ldr  r4,=GPIOD_BASE				//establish addressability to GPIOD_BASE, using r4
+  20 0004 054A     			ldr  r2,=(0b01<<(2*13))		//setting mode to output to pin 13
+  21 0006 2260     			str  r2,[r4,#GPIO_MODER]	//store the bits from r2 into MODER register
+  22              	
+  23 0008 054D     			ldr r5,=#0				//set off switch
+  24 000a 064E     			ldr r6,=#(1<<13)	//set on switch for pin13 (orange)
+  25              	
+  26 000c 6661     			str r6,[r4,#GPIO_ODR]	//set the pin13 register to 0 (Off)
+  27 000e 6561     			str r5,[r4,#GPIO_ODR]	//set the pin13 register to 1 (On)
+  28              	
+  29              	    all_done:
+  30              	    
+  31 0010 BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  32              	
+  33 0014 7047     	    bx lr
+  34              	  
+  35 0016 0000000C 	  ENDFUNC main
+  35      02400000 
+  35      00040000 
+  35      00000020 
+  35      0000
+  36              	
+  37              	  .data
+  38              	
+  39              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+       src/lab06p2.s:11     *ABS*:40020c00 GPIOD_BASE
+       src/lab06p2.s:12     *ABS*:00000000 GPIO_MODER
+       src/lab06p2.s:13     *ABS*:00000014 GPIO_ODR
+       src/lab06p2.s:15     .text:00000000 main
+       src/lab06p2.s:15     .text:00000000 $t
+       src/lab06p2.s:29     .text:00000010 all_done
+       src/lab06p2.s:35     .text:00000016 $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

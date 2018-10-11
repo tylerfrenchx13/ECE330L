@@ -1,0 +1,47 @@
+   1              	# file: lab07p2c.s
+   2              	# team w4
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 00B5     	    push {lr}
+  14              	
+  15 0002 FFF7FEFF 	    bl SW_Init
+  16 0006 FFF7FEFF 	    bl LEDR_Init
+  17              	
+  18              	    while:
+  19              	        
+  20 000a FFF7FEFF 	        bl SW_Get_B
+  21 000e FFF7FEFF 	        bl decode4x16
+  22 0012 FFF7FEFF 	        bl gpio_d_put
+  23              	
+  24 0016 F8E7     	        b while
+  25              	    
+  26 0018 5DF804EB 	    pop {lr}
+  27 001c 7047     	    bx lr
+  28              	  
+  29              	  ENDFUNC main
+  30              	
+  31 001e 00BF     	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+      src/lab07p2c.s:11     .text:00000000 main
+      src/lab07p2c.s:11     .text:00000000 $t
+      src/lab07p2c.s:18     .text:0000000a while
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+SW_Init
+LEDR_Init
+SW_Get_B
+decode4x16
+gpio_d_put

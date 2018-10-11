@@ -1,0 +1,67 @@
+   1              	# 1 "startup/qemu_crt0.S"
+   1              	/*
+   1              	...
+   0              	
+   0              	
+   2              	 * file: qemu_crt0.S
+   3              	 */
+   4              	 
+   5              	  .include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	 
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	  
+  11              	  FUNCTION _my_start,global
+  12              	  
+  13              	/* Annotation for EABI unwinding tables.  */
+  14              	  .fnstart
+  15              	
+  16              	  /* Zero the memory in the .bss section.  */
+  17 0000 0021     	  movs a2, #0			/* Second arg: fill value */
+  18 0002 8B46     	  mov  fp, a2			/* Null frame pointer */
+  19 0004 0F46     	  mov  r7, a2			/* Null frame pointer for Thumb */
+  20              	
+  21              	  /* Some arm/elf targets use the .init and .fini sections
+  22              	   to create constructors and destructors, and for these
+  23              	   targets we need to call the _init function and arrange
+  24              	   for _fini to be called at program exit.  */
+  25              	
+  26 0006 0448     	  ldr	r0, .Lfini
+  27 0008 FFF7FEFF 	  bl	atexit
+  28              	.Lweak_atexit:
+  29 000c FFF7FEFF 	  bl	_init
+  30              	
+  31 0010 FFF7FEFF 	  bl	main
+  32              	
+  33 0014 FFF7FEFF 	  bl	exit		/* Should not return.  */
+  34              	
+  35              	  .align 2
+  36              	
+  37              	  /* Protect against unhandled exceptions.  */
+  38              	  .cantunwind
+  39              	  .fnend
+  40              	
+  41              	.Lfini:
+  42 0018 00000000 	  .word	_fini
+  43              	
+  44              	  ENDFUNC _my_start
+  45              	    
+  46              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+ startup/qemu_crt0.S:11     .text:00000000 _my_start
+ startup/qemu_crt0.S:11     .text:00000000 $t
+                       .ARM.exidx:00000000 $d
+ startup/qemu_crt0.S:42     .text:00000018 $d
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+atexit
+_init
+main
+exit
+_fini

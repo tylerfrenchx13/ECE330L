@@ -1,0 +1,89 @@
+   1              	# file: lab04p4.s
+   2              	# desc: lab04 p4
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 2DE9F047 	    push {r4,r5,r6,r7,r8,r9,r10,lr}
+  14              	
+  15 0004 0B4C     	    ldr 	r4,=DS //Establish Addressability
+  16 0006 94F80450 		ldrb	r5,[r4,#A-DS]  //Load A into r5
+  17 000a B4F80660 		ldrh	r6,[r4,#B-DS]  //Load B into r6
+  18 000e 05EB0607 		add	r7,r5,r6  // add r5 and r6, store in r7
+  19 0012 C4F80870 		str	r7,[r4,#C-DS] //store value back into memory
+  20              		
+  21 0016 05FB06F8 		mul r8,r5,r6	// multiply r5 and r6, and store into r8
+  22 001a A5EB0609 		sub r9,r5,r6	// subtract r6 from r5, and store into r9
+  23 001e B6FBF5FA 		udiv r10,r6,r5	// divide r5 from r6, and store into r10
+  24              	
+  25 0022 C4F80C80 		str r8,[r4,#D-DS]	//store value back into memory
+  26 0026 C4F81090 		str r9,[r4,#E-DS]	//store value back into memory
+  27 002a C4F814A0 		str r10,[r4,#F-DS]	//store value back into memory
+  28              	
+  29              	    all_done:
+  30              	    
+  31 002e BDE8F047 	    pop {r4,r5,r6,r7,r8,r9,r10,lr}
+  32              	
+  33 0032 7047     	    bx lr
+  34              	  
+  35 0034 EC000000 	  ENDFUNC main
+  36              	
+  37              	  .data
+  38              	
+  39 0000 00000000 	  .org 234
+  39      00000000 
+  39      00000000 
+  39      00000000 
+  39      00000000 
+  40 00ea A5A5     	  .align 2,0xa5
+  41              	
+  42 00ec BBBBBBBB 	DS:   .word  0xbbbbbbbb
+  43              	
+  44 00f0 7B       	A:    .byte  123
+  45              	
+  46 00f1 A5       	      .align 1,0xa5
+  47 00f2 E3B9     	B:    .short 47587
+  48              	
+  49              	      .align 2,0xa5
+  50 00f4 FFFFFFFF 	C:    .word  ~0
+  51              	
+  52              		  .align 2,0xa5
+  53 00f8 FFFFFFFF 	D:	  .word ~0
+  54              	
+  55              		  .align 1,0xa5
+  56 00fc FFFF     	E:	  .short ~0
+  57              	
+  58 00fe A5A5     		  .align 0,0xa5
+  59 0100 FF       	F:	  .byte ~0
+  60              	
+  61 0101 A5A5A5A5 	      .align 3,0xa5
+  61      A5A5A5
+  62 0108 EEEEEEEE 	      .word  0xeeeeeeee
+  63              	
+  64 010c 00000000 	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+       src/lab04p4.s:11     .text:00000000 main
+       src/lab04p4.s:11     .text:00000000 $t
+       src/lab04p4.s:42     .data:000000ec DS
+       src/lab04p4.s:44     .data:000000f0 A
+       src/lab04p4.s:47     .data:000000f2 B
+       src/lab04p4.s:50     .data:000000f4 C
+       src/lab04p4.s:53     .data:000000f8 D
+       src/lab04p4.s:56     .data:000000fc E
+       src/lab04p4.s:59     .data:00000100 F
+       src/lab04p4.s:29     .text:0000002e all_done
+       src/lab04p4.s:35     .text:00000034 $d
+       src/lab04p4.s:40     .data:000000ea $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,72 @@
+   1              	# 1 "startup/qemu_reset.S"
+   1              	/*
+   1              	...
+   0              	
+   0              	
+   2              	 * file: qemu_reset.S
+   3              	 */
+   4              	
+   5              	  .include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	 
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	  
+  11              	  FUNCTION Reset_Handler,global
+  12              	
+  13 0000 0B49     	    ldr	r1, =__etext		// from start
+  14 0002 0C4A     	    ldr	r2, =__data_start__	// to start
+  15 0004 0C4B     	    ldr	r3, =__data_end__	// to end
+  16              	
+  17              	    loop_data:
+  18 0006 9A42     	      cmp	r2, r3
+  19 0008 BEBF     	      ittt	lt
+  20 000a 51F8040B 	      ldrlt	r0, [r1], #4
+  21 000e 42F8040B 	      strlt	r0, [r2], #4
+  22 0012 F8E7     	      blt	loop_data
+  23              	
+  24 0014 0020     	    movs    r0, #0
+  25 0016 0949     	    ldr     r1, =__bss_start__
+  26 0018 094A     	    ldr     r2, =__bss_end__
+  27              	
+  28              	    bloop:
+  29 001a 9142     	      cmp     r1, r2
+  30 001c 3CBF     	      itt     lo
+  31 001e 41F8040B 	      strlo   r0, [r1], #4
+  32 0022 FAE7     	      blo     bloop
+  33              	
+  34              	    .weak SystemInit
+  35 0024 0748     	    ldr	r0,=SystemInit
+  36 0026 0028     	    cmp	r0,#0
+  37 0028 18BF     	    it	ne
+  38 002a 8047     	    blxne	r0
+  39              	    
+  40 002c FFF7FEFF 	    bl	_my_start
+  41              	
+  42 0030 00000000 	  ENDFUNC Reset_Handler
+  42      00000000 
+  42      00000000 
+  42      00000000 
+  42      00000000 
+  43              	
+  44              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+startup/qemu_reset.S:11     .text:00000000 Reset_Handler
+startup/qemu_reset.S:11     .text:00000000 $t
+startup/qemu_reset.S:17     .text:00000006 loop_data
+startup/qemu_reset.S:28     .text:0000001a bloop
+startup/qemu_reset.S:42     .text:00000030 $d
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+__etext
+__data_start__
+__data_end__
+__bss_start__
+__bss_end__
+SystemInit
+_my_start

@@ -1,0 +1,65 @@
+   1              	# file: lab04p2b.s
+   2              	# desc: lab04 p2b
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  14              	
+  15 0002 044C     	    ldr r4,=DS		//use register r4 to establish addressability to symbol DS
+  16 0004 14F8045C 	    ldrb r5,[r4,B-DS]	//load the value of label B into register r5
+  17 0008 D4F80460 	    ldr r6,[r4,W-DS]	//load the value of label W into register r6
+  18              	
+  19              	    all_done:
+  20              	    
+  21 000c BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  22              	
+  23 0010 7047     	    bx lr
+  24              	  
+  25 0012 00003401 	  ENDFUNC main
+  25      0000
+  26              	
+  27              	  .data
+  28              	
+  29 0000 00000000 	    .org 300
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  29      00000000 
+  30              	
+  31              	    .align 2,0xaa
+  32 012c BBBBBBBB 	    .word 0xbbbbbbbb
+  33              	
+  34 0130 55       	B:  .byte 85
+  35              	
+  36 0131 AAAAAA   	    .align 2, 0xaa
+  37 0134 FFFFFFFF 	DS: .word ~0
+  38              	
+  39              	    .align 2, 0xaa
+  40 0138 44332211 	W:  .word 287454020
+  41              	
+  42 013c EEEEEEEE 	    .word 0xeeeeeeee
+  43              	
+  44              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+      src/lab04p2b.s:11     .text:00000000 main
+      src/lab04p2b.s:11     .text:00000000 $t
+      src/lab04p2b.s:37     .data:00000134 DS
+      src/lab04p2b.s:34     .data:00000130 B
+      src/lab04p2b.s:40     .data:00000138 W
+      src/lab04p2b.s:19     .text:0000000c all_done
+      src/lab04p2b.s:25     .text:00000012 $d
+      src/lab04p2b.s:31     .data:0000012c $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

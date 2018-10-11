@@ -1,0 +1,45 @@
+   1              	# file: lab04p2a.s
+   2              	# desc: lab04 p2a
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  14              	
+  15 0002 024C     	    ldr  r4,=W
+  16 0004 2568     	    ldr  r5,[r4]
+  17              	
+  18              	    all_done:
+  19              	    
+  20 0006 BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  21              	
+  22 000a 7047     	    bx lr
+  23              	  
+  24 000c 04000000 	  ENDFUNC main
+  25              	
+  26              	  .data
+  27              	
+  28 0000 BBBBBBBB 	    .word 0xbbbbbbbb
+  29 0004 CEFAEDFE 	W:  .word 4277009102
+  30 0008 EEEEEEEE 	    .word 0xeeeeeeee
+  31              	
+  32              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+      src/lab04p2a.s:11     .text:00000000 main
+      src/lab04p2a.s:11     .text:00000000 $t
+      src/lab04p2a.s:29     .data:00000004 W
+      src/lab04p2a.s:18     .text:00000006 all_done
+      src/lab04p2a.s:24     .text:0000000c $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

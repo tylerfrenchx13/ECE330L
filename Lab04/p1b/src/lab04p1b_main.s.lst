@@ -1,0 +1,70 @@
+   1              	// file: main_asm.s
+   2              	// desc: lab04 p1b
+   3              	// author: <your-names>
+   4              	
+   5              	  .include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	  
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 F0B4     	    push {r4,r5,r6,r7}
+  14              	
+  15 0002 064C     	      ldr   r4,=DSECT
+  16 0004 94F80450 	      ldrb  r5,[r4,X-DSECT]
+  17 0008 B4F80660 	      ldrh  r6,[r4,Y-DSECT]
+  18 000c 05EB0607 	      add   r7,r5,r6
+  19 0010 C4F80870 	      str   r7,[r4,Z-DSECT]
+  20              	
+  21 0014 00BF     	    all_done: nop
+  22              	
+  23 0016 F0BC     	    pop {r4,r5,r6,r7}
+  24              	    
+  25 0018 7047     	      bx lr
+  26              	
+  27 001a 0000EC00 	  ENDFUNC main
+  27      0000
+  28              	      
+  29              	  .data
+  30              	
+  31 0000 00000000 	  .org 234
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  31      00000000 
+  32 00ea A5A5     	  .align 2,0xa5
+  33              	  
+  34              	DSECT:
+  35 00ec BBBBBBBB 	     .word 0xbbbbbbbb
+  36              	
+  37 00f0 EA       	X:   .byte 234
+  38              	
+  39 00f1 AA       	     .align 1,0xaa
+  40 00f2 D5DD     	Y:   .short 56789
+  41              	
+  42              	     .align 2,0xaa
+  43 00f4 FFFFFFFF 	Z:   .word ~0
+  44              	
+  45              	     .align 3,0xaa
+  46 00f8 EEEEEEEE 	     .word 0xeeeeeeee
+  47              	
+  48 00fc 00000000 	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+ src/lab04p1b_main.s:11     .text:00000000 main
+ src/lab04p1b_main.s:11     .text:00000000 $t
+ src/lab04p1b_main.s:34     .data:000000ec DSECT
+ src/lab04p1b_main.s:37     .data:000000f0 X
+ src/lab04p1b_main.s:40     .data:000000f2 Y
+ src/lab04p1b_main.s:43     .data:000000f4 Z
+ src/lab04p1b_main.s:21     .text:00000014 all_done
+ src/lab04p1b_main.s:27     .text:0000001a $d
+ src/lab04p1b_main.s:32     .data:000000ea $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

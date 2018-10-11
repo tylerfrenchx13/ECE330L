@@ -1,0 +1,119 @@
+   1              	# file: lab06p4.s
+   2              	# team w4
+   3              	# authors: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              		.equ GPIOD_BASE, 0x40020c00 
+  12              		.equ GPIO_MODER, 0x00
+  13              		.equ GPIO_ODR, 0x14
+  14              		.equ WAIT,500000
+  15              	
+  16              	  FUNCTION main,global
+  17              	
+  18 0000 F9B5     	    push {r0,r3,r4,r5,r6,r7,lr}			//push registers onto the stack
+  19              	
+  20 0002 164C     	    ldr  r4,=GPIOD_BASE				//establish addressability to GPIOD_BASE, using r4
+  21 0004 164A     			ldr  r2,=(0b01010101<<(2*12))		//setting mode to output to pin 13
+  22 0006 2260     			str  r2,[r4,#GPIO_MODER]	//store the bits from r2 into MODER register
+  23              	
+  24 0008 164D     			ldr r5,=#0		//set off switch
+  25 000a 174E     			ldr r6,=#(1<<13)	//set on switch for pin13 (orange)
+  26              		
+  27              			A: 
+  28 000c 164E     			ldr r6,=#(1<<13)
+  29              	
+  30 000e 6661     			str r6,[r4,#GPIO_ODR]	//set the pin13 register to 1 (On)
+  31 0010 1648     			ldr r0,=WAIT		//load r0 with 1000000
+  32 0012 00F033F8 			bl delay		//call delay function
+  33              	
+  34 0016 6561     			str r5,[r4,#GPIO_ODR]	//set the pin13 register to 0 (Off)
+  35 0018 1448     			ldr r0,=WAIT		//load r0 with 1000000
+  36 001a 00F02FF8 			bl delay		//call delay function
+  37              		
+  38 001e 144E     			ldr r6,=#(1<<14)
+  39              		
+  40 0020 6661     			str r6,[r4,#GPIO_ODR]	//set the pin13 register to 1 (On)
+  41 0022 1248     			ldr r0,=WAIT		//load r0 with 1000000
+  42 0024 00F02AF8 			bl delay		//call delay function
+  43              	
+  44 0028 6561     			str r5,[r4,#GPIO_ODR]	//set the pin13 register to 0 (Off)
+  45 002a 1048     			ldr r0,=WAIT		//load r0 with 1000000
+  46 002c 00F026F8 			bl delay		//call delay function
+  47              			
+  48 0030 104E     			ldr r6,=#(1<<15)
+  49              		
+  50 0032 6661     			str r6,[r4,#GPIO_ODR]	//set the pin13 register to 1 (On)
+  51 0034 0D48     			ldr r0,=WAIT		//load r0 with 1000000
+  52 0036 00F021F8 			bl delay		//call delay function
+  53              	
+  54 003a 6561     			str r5,[r4,#GPIO_ODR]	//set the pin13 register to 0 (Off)
+  55 003c 0B48     			ldr r0,=WAIT		//load r0 with 1000000
+  56 003e 00F01DF8 			bl delay		//call delay function
+  57              			
+  58 0042 0D4E     			ldr r6,=#(1<<12)
+  59              		
+  60 0044 6661     			str r6,[r4,#GPIO_ODR]	//set the pin13 register to 1 (On)
+  61 0046 0948     			ldr r0,=WAIT		//load r0 with 1000000
+  62 0048 00F018F8 			bl delay		//call delay function
+  63              	
+  64 004c 6561     			str r5,[r4,#GPIO_ODR]	//set the pin13 register to 0 (Off)
+  65 004e 0748     			ldr r0,=WAIT		//load r0 with 1000000
+  66 0050 00F014F8 			bl delay		//call delay function
+  67              		
+  68              	
+  69 0054 DAE7     			b A
+  70              	
+  71              	    all_done:
+  72              	    
+  73 0056 BDE8F940 	    pop {r0,r3,r4,r5,r6,r7,lr}
+  74              	
+  75 005a 7047     	    bx lr
+  76              	  
+  77 005c 000C0240 	  ENDFUNC main
+  77      00000055 
+  77      00000000 
+  77      00200000 
+  77      20A10700 
+  78              	
+  79              	  FUNCTION  delay
+  80              	
+  81 007c 4FF00003 		mov r3,#0	//put 0 into r3
+  82              		
+  83              		delay_loop:
+  84              		
+  85 0080 A0F10100 			sub r0,#1	//subtract 1 from r0
+  86 0084 9842     			cmp r0,r3	//compare r0 and r3, set a flag
+  87 0086 FBDA     			bge delay_loop
+  88              	
+  89 0088 7047     		bx lr
+  90              	
+  91              	  ENDFUNC delay 
+  92              	
+  93 008a 00BF     	  .data
+  94              	
+  95              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+       src/lab06p4.s:11     *ABS*:40020c00 GPIOD_BASE
+       src/lab06p4.s:12     *ABS*:00000000 GPIO_MODER
+       src/lab06p4.s:13     *ABS*:00000014 GPIO_ODR
+       src/lab06p4.s:14     *ABS*:0007a120 WAIT
+       src/lab06p4.s:16     .text:00000000 main
+       src/lab06p4.s:16     .text:00000000 $t
+       src/lab06p4.s:27     .text:0000000c A
+       src/lab06p4.s:79     .text:0000007c delay
+       src/lab06p4.s:71     .text:00000056 all_done
+       src/lab06p4.s:77     .text:0000005c $d
+       src/lab06p4.s:79     .text:0000007c $t
+       src/lab06p4.s:83     .text:00000080 delay_loop
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS
