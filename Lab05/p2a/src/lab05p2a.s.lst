@@ -1,0 +1,42 @@
+   1              	# file: lab05p2a.s
+   2              	# team: w4
+   3              	
+   4              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   5              	
+   6              	  SET_TARGET
+   7              	
+   8              	  .text
+   9              	
+  10              	  FUNCTION main,global
+  11              	
+  12 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  13              	
+  14 0002 024C     	    ldr  r4,=A
+  15 0004 2588     	    ldrh r5,[r4]
+  16              	
+  17              	    all_done:
+  18              	    
+  19 0006 BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  20              	
+  21 000a 7047     	    bx lr
+  22              	  
+  23 000c 00000000 	  ENDFUNC main
+  24              	
+  25              	  .data
+  26              	
+  27 0000 CDAB     	A:  .short 0xabcd
+  28              	
+  29              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+      src/lab05p2a.s:10     .text:00000000 main
+      src/lab05p2a.s:10     .text:00000000 $t
+      src/lab05p2a.s:27     .data:00000000 A
+      src/lab05p2a.s:17     .text:00000006 all_done
+      src/lab05p2a.s:23     .text:0000000c $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

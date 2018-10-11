@@ -1,0 +1,79 @@
+   1              	# 1 "startup/qemu_vector.S"
+   1              	/*
+   1              	...
+   0              	
+   0              	
+   2              	 * file: qemu_vector.S
+   3              	 */
+   4              	
+   5              	  .include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  .macro ISR_VECTOR handler:req,def_handler:vararg
+   8              	    .word	\handler
+   9              	    .ifnb	\def_handler
+  10              	      .weak		\handler
+  11              	      .thumb_set	\handler,\def_handler
+  12              	    .endif
+  13              	  .endm
+  14              	
+  15              	  SET_TARGET
+  16              	
+  17              	  .section .isr_vector
+  18              	  .align	2
+  19              	  .globl	__isr_vector
+  20              	__isr_vector:
+  21              	
+  22 0000 00000000 	  ISR_VECTOR __StackTop				/* Top of Stack */
+  23 0004 00000000 	  ISR_VECTOR Reset_Handler,Default_Handler	/* Reset Handler */
+  24 0008 00000000 	  ISR_VECTOR NMI_Handler,Default_Handler		/* NMI Handler */
+  25 000c 00000000 	  ISR_VECTOR HardFault_Handler,Default_Handler	/* Hard Fault Handler */
+  26 0010 00000000 	  ISR_VECTOR MemManage_Handler,Default_Handler	/* MPU Fault Handler */
+  27 0014 00000000 	  ISR_VECTOR BusFault_Handler,Default_Handler	/* Bus Fault Handler */
+  28 0018 00000000 	  ISR_VECTOR UsageFault_Handler,Default_Handler	/* Usage Fault Handler */
+  29 001c 00000000 	  ISR_VECTOR 0					/* Reserved */
+  30 0020 00000000 	  ISR_VECTOR 0					/* Reserved */
+  31 0024 00000000 	  ISR_VECTOR 0					/* Reserved */
+  32 0028 00000000 	  ISR_VECTOR 0					/* Reserved */
+  33 002c 00000000 	  ISR_VECTOR SVC_Handler,Default_Handler		/* SVCall Handler */
+  34 0030 00000000 	  ISR_VECTOR DebugMon_Handler,Default_Handler	/* Debug Monitor Handler */
+  35 0034 00000000 	  ISR_VECTOR 0					/* Reserved */
+  36 0038 00000000 	  ISR_VECTOR PendSV_Handler,Default_Handler	/* PendSV Handler */
+  37 003c 00000000 	  ISR_VECTOR SysTick_Handler,Default_Handler	/* SysTick Handler */
+  38              	
+  39              	  /* External interrupts */
+  40 0040 00000000 	  ISR_VECTOR DEF_IRQHandler,Default_Handler
+  41              	
+  42              	  .size	__isr_vector, . - __isr_vector
+  43              	
+  44              	FUNCTION Default_Handler
+  45              	
+  46 0044 FEE7     	  b	.
+  47              	  
+  48              	ENDFUNC Default_Handler
+  49              	
+  50 0046 0000     	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+startup/qemu_vector.S:18     .isr_vector:00000000 $d
+startup/qemu_vector.S:20     .isr_vector:00000000 __isr_vector
+                      .isr_vector:00000044 Reset_Handler
+startup/qemu_vector.S:44     .isr_vector:00000044 Default_Handler
+                      .isr_vector:00000044 NMI_Handler
+                      .isr_vector:00000044 HardFault_Handler
+                      .isr_vector:00000044 MemManage_Handler
+                      .isr_vector:00000044 BusFault_Handler
+                      .isr_vector:00000044 UsageFault_Handler
+                      .isr_vector:00000044 SVC_Handler
+                      .isr_vector:00000044 DebugMon_Handler
+                      .isr_vector:00000044 PendSV_Handler
+                      .isr_vector:00000044 SysTick_Handler
+                      .isr_vector:00000044 DEF_IRQHandler
+startup/qemu_vector.S:46     .isr_vector:00000044 $t
+                   .debug_aranges:0000000c $d
+startup/qemu_vector.S:50     .isr_vector:00000046 $d
+
+UNDEFINED SYMBOLS
+__StackTop

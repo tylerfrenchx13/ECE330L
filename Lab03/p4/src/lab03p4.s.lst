@@ -1,0 +1,79 @@
+   1              	# file: lab03p4.s
+   2              	# team w4
+   3              	
+   4              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   5              	
+   6              	  SET_TARGET
+   7              	
+   8              	  .text
+   9              	
+  10              	  FUNCTION main,global
+  11              	
+  12 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  13              	
+  14              	    // Established Addressability
+  15 0002 0B4F     	    ldr r7, =DSECT
+  16              	
+  17              	    //Set shift values
+  18              	    .equ Left_Shift, 13
+  19              	    .equ Right_Rotate, 5
+  20              	
+  21              	    //Load Labels into r4-r6
+  22 0004 97F80440 	    ldrb r4, [r7,#A-DSECT]
+  23 0008 B7F80650 	    ldrh r5, [r7,#B-DSECT]
+  24 000c D7F80860 	    ldr r6, [r7,#C-DSECT]
+  25              	
+  26              	    //Shift contents of labels by Left_Shift
+  27 0010 4FEA4434 	    lsl r4, Left_Shift
+  28 0014 4FEA4535 	    lsl r5, Left_Shift
+  29 0018 4FEA4636 	    lsl r6, Left_Shift
+  30              	
+  31              	    //rotate contents of labels by Right_Rotate
+  32 001c 4FEA7414 	    ror r4, Right_Rotate
+  33 0020 4FEA7515 	    ror r5, Right_Rotate
+  34 0024 4FEA7616 	    ror r6, Right_Rotate
+  35              	
+  36              	    all_done:
+  37              	    
+  38 0028 BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  39              	
+  40 002c 7047     	    bx lr
+  41              	  
+  42 002e 00000000 	  ENDFUNC main
+  42      0000
+  43              	
+  44              	  .data
+  45              	  DSECT:
+  46 0000 BBBBBBBB 	  .word 0xbbbbbbbb //begin coremark
+  47              	
+  48              	  //Sets labels with byte, short, and word of data (0x4) respectively
+  49              	      .align 0
+  50 0004 04       	  A:  .byte 0x4
+  51              	
+  52 0005 00       	      .align 1
+  53 0006 0400     	  B:  .short 0x0004
+  54              	
+  55              	      .align 2
+  56 0008 04000000 	  C:  .word 0x00000004
+  57              	
+  58 000c EEEEEEEE 	  .word 0xeeeeeeee
+  59              	  .end //end coremark
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+       src/lab03p4.s:10     .text:00000000 main
+       src/lab03p4.s:10     .text:00000000 $t
+       src/lab03p4.s:45     .data:00000000 DSECT
+       src/lab03p4.s:18     *ABS*:0000000d Left_Shift
+       src/lab03p4.s:19     *ABS*:00000005 Right_Rotate
+       src/lab03p4.s:50     .data:00000004 A
+       src/lab03p4.s:53     .data:00000006 B
+       src/lab03p4.s:56     .data:00000008 C
+       src/lab03p4.s:36     .text:00000028 all_done
+       src/lab03p4.s:42     .text:0000002e $d
+       src/lab03p4.s:49     .data:00000004 $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

@@ -1,0 +1,50 @@
+   1              	# file: lab05p2c.s
+   2              	# team w4
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  14              	
+  15 0002 04A4     	    adr   r4,DS         //Establish addressability using adr instruction
+  16 0004 B4F80050 	    ldrh  r5,[r4,A-DS]  //load short into r5 from label A
+  17 0008 D4F80460 	    ldr   r6,[r4,B-DS]  //load short into r6 from label B
+  18              	
+  19              	    all_done:
+  20              	    
+  21 000c BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  22              	
+  23 0010 7047     	    bx lr
+  24              	
+  25 0012 AAAA     	      .align 2,0xaa
+  26              	DS:
+  27              	      .align 1,0xaa
+  28 0014 CDAB     	A:    .short 0xabcd
+  29              	
+  30 0016 AAAA     	      .align 2,0xaa
+  31 0018 78563412 	B:    .word 0x12345678
+  32              	  
+  33              	  ENDFUNC main
+  34              	
+  35              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+      src/lab05p2c.s:11     .text:00000000 main
+      src/lab05p2c.s:11     .text:00000000 $t
+      src/lab05p2c.s:26     .text:00000014 DS
+      src/lab05p2c.s:28     .text:00000014 A
+      src/lab05p2c.s:31     .text:00000018 B
+      src/lab05p2c.s:19     .text:0000000c all_done
+      src/lab05p2c.s:25     .text:00000012 $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS
