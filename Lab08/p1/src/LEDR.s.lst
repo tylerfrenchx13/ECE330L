@@ -1,0 +1,178 @@
+   1              	# file: LEDR.s
+   2              	# author: Justin Johnson, Tyler French
+   3              	# team w4
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	.include "src/gpio_regs.inc"
+   1              	# file: gpio_regs.inc
+   2              	# team w4
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              		.equ GPIOA_BASE, 0x40020000
+   6              		.equ GPIOB_BASE, 0x40020400
+   7              		.equ GPIOC_BASE, 0x40020800
+   8              		.equ GPIOD_BASE, 0x40020c00
+   9              		.equ GPIOE_BASE, 0x40021000
+  10              	
+  11              		.equ GPIO_MODER, 0x00
+  12              		.equ GPIO_OTYPER, 0x04
+  13              		.equ GPIO_OSPEEDR, 0x08
+  14              		.equ GPIO_PUPDR, 0x0c
+  15              		.equ GPIO_IDR, 0x10
+  16              		.equ GPIO_ODR, 0x14
+  17              		.equ GPIO_BSRR, 0x18
+  18              		.equ GPIO_LCKR, 0x1c
+  19              		.equ GPIO_AFRL, 0x20
+  20              		.equ GPIO_AFRH, 0x24
+  21              	
+  22              	
+   7              	
+   8              	  SET_TARGET
+   9              	
+  10              	  .text
+  11              	
+  12              	  FUNCTION LEDR_Init,global
+  13              	
+  14 0000 00B5     	    push {lr}
+  15              	
+  16 0002 FFF7FEFF 	    bl gpio_d_init          //initialize GPIO port D as output
+  17              	
+  18 0006 5DF804EB 	    pop {lr}
+  19              	
+  20 000a 7047     	    bx lr
+  21              	
+  22              	  ENDFUNC LEDR_Init
+  23              	  
+  24              	  FUNCTION LEDR_Put_A,global
+  25              	
+  26 000c 00B5     	    push {lr}
+  27              	
+  28 000e 0146     	    mov r1,r0               //save the value of passed inputs
+  29              	
+  30 0010 FFF7FEFF 	    bl gpio_d_get_current   //get target value
+  31              	    
+  32 0014 4FF00102 	    mov r2,#0b1             //create 1 bit mask
+  33 0018 01EA0201 	    and r1,r2               //isolate new bit 8
+  34 001c 4FEA0121 	    lsl r1,#8               //denormalize the new bit 8
+  35 0020 4FEA0222 	    lsl r2,#8               //denormalize mask bit 8
+  36 0024 6FEA0202 	    mvn r2,r2               //invert mask
+  37 0028 00EA0200 	    and r0,r2               //clear target bit 8
+  38 002c 40EA0100 	    orr r0,r1               //merge new bit 8 into target
+  39              	    
+  40 0030 FFF7FEFF 	    bl gpio_d_put           //write target register to port D
+  41              	
+  42 0034 5DF804EB 	    pop {lr}
+  43              	
+  44 0038 7047     	    bx lr
+  45              	
+  46              	  ENDFUNC LEDR_Put_A
+  47              	
+  48 003a 00BF     	  FUNCTION LEDR_Put_B,global
+  49              	
+  50 003c 00B5     	    push {lr}
+  51              	
+  52 003e 0146     	    mov r1,r0               //save the value of passed inputs
+  53              	
+  54 0040 FFF7FEFF 	    bl gpio_d_get_current   //get target value
+  55              	
+  56 0044 084A     	    ldr r2,=(~(~0<<4))       //create 4 bit mask
+  57 0046 01EA0201 	    and r1,r2               //isolate bits [5:2]
+  58 004a 4FEA8101 	    lsl r1,#2               //denormalize the new bits
+  59 004e 4FEA8202 	    lsl r2,#2               //denormalize mask bits
+  60 0052 6FEA0202 	    mvn r2,r2               //invert mask
+  61 0056 00EA0200 	    and r0,r2               //clear target bit 2
+  62 005a 40EA0100 	    orr r0,r1               //merge new bits into target
+  63              	
+  64 005e FFF7FEFF 	    bl gpio_d_put
+  65              	
+  66 0062 5DF804EB 	    pop {lr}
+  67              	
+  68 0066 7047     	    bx lr
+  69              	
+  70 0068 0F000000 	  ENDFUNC LEDR_Put_B
+  71              	
+  72              	  FUNCTION led_put_index,global
+  73              	
+  74 006c 00B5     	    push {lr}
+  75              	
+  76 006e 0146     	    mov r1,r0               //save the value of passed inputs
+  77              	
+  78 0070 FFF7FEFF 	    bl gpio_d_get_current   //get target value
+  79              	
+  80 0074 084A     	    ldr r2,=(~(~0<<3))       //create 4 bit mask
+  81 0076 01EA0201 	    and r1,r2               //isolate bits [5:2]
+  82 007a 4FEA0131 	    lsl r1,#12               //denormalize the new bits
+  83 007e 4FEA0232 	    lsl r2,#12               //denormalize mask bits
+  84 0082 6FEA0202 	    mvn r2,r2               //invert mask
+  85 0086 00EA0200 	    and r0,r2               //clear target bit 2
+  86 008a 40EA0100 	    orr r0,r1               //merge new bits into target
+  87              	
+  88 008e FFF7FEFF 	    bl gpio_d_put
+  89              	
+  90 0092 5DF804EB 	    pop {lr}
+  91              	
+  92 0096 7047     	    bx lr
+  93              	
+  94 0098 07000000 	  ENDFUNC led_put_index
+  95              	
+  96              	  FUNCTION led_put_segments,global
+  97              	
+  98 009c 00B5     	    push {lr}
+  99              	
+ 100 009e 0146     	    mov r1,r0               //save the value of passed inputs
+ 101              	
+ 102 00a0 FFF7FEFF 	    bl gpio_d_get_current   //get target value
+ 103              	
+ 104 00a4 084A     	    ldr r2,=(~(~0<<7))       //create 7 bit mask
+ 105 00a6 01EA0201 	    and r1,r2               //isolate bits [6:0]
+ 106 00aa 4FEA0101 	    lsl r1,#0               //denormalize the new bits
+ 107 00ae 4FEA0202 	    lsl r2,#0               //denormalize mask bits
+ 108 00b2 6FEA0202 	    mvn r2,r2               //invert mask
+ 109 00b6 00EA0200 	    and r0,r2               //clear target bit 2
+ 110 00ba 40EA0100 	    orr r0,r1               //merge new bits into target
+ 111              	
+ 112 00be FFF7FEFF 	    bl gpio_d_put
+ 113              	
+ 114 00c2 5DF804EB 	    pop {lr}
+ 115              	
+ 116 00c6 7047     	    bx lr
+ 117              	
+ 118 00c8 7F000000 	  ENDFUNC led_put_segments
+ 119              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+ ./src/gpio_regs.inc:5      *ABS*:40020000 GPIOA_BASE
+ ./src/gpio_regs.inc:6      *ABS*:40020400 GPIOB_BASE
+ ./src/gpio_regs.inc:7      *ABS*:40020800 GPIOC_BASE
+ ./src/gpio_regs.inc:8      *ABS*:40020c00 GPIOD_BASE
+ ./src/gpio_regs.inc:9      *ABS*:40021000 GPIOE_BASE
+ ./src/gpio_regs.inc:11     *ABS*:00000000 GPIO_MODER
+ ./src/gpio_regs.inc:12     *ABS*:00000004 GPIO_OTYPER
+ ./src/gpio_regs.inc:13     *ABS*:00000008 GPIO_OSPEEDR
+ ./src/gpio_regs.inc:14     *ABS*:0000000c GPIO_PUPDR
+ ./src/gpio_regs.inc:15     *ABS*:00000010 GPIO_IDR
+ ./src/gpio_regs.inc:16     *ABS*:00000014 GPIO_ODR
+ ./src/gpio_regs.inc:17     *ABS*:00000018 GPIO_BSRR
+ ./src/gpio_regs.inc:18     *ABS*:0000001c GPIO_LCKR
+ ./src/gpio_regs.inc:19     *ABS*:00000020 GPIO_AFRL
+ ./src/gpio_regs.inc:20     *ABS*:00000024 GPIO_AFRH
+          src/LEDR.s:12     .text:00000000 LEDR_Init
+          src/LEDR.s:12     .text:00000000 $t
+          src/LEDR.s:24     .text:0000000c LEDR_Put_A
+          src/LEDR.s:48     .text:0000003c LEDR_Put_B
+          src/LEDR.s:70     .text:00000068 $d
+          src/LEDR.s:72     .text:0000006c led_put_index
+          src/LEDR.s:72     .text:0000006c $t
+          src/LEDR.s:94     .text:00000098 $d
+          src/LEDR.s:96     .text:0000009c led_put_segments
+          src/LEDR.s:96     .text:0000009c $t
+          src/LEDR.s:118    .text:000000c8 $d
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+gpio_d_init
+gpio_d_get_current
+gpio_d_put

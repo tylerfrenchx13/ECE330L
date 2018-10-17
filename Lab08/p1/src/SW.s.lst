@@ -1,0 +1,189 @@
+   1              	# file: SW.s
+   2              	# author: Justin Johnson, Tyler French
+   3              	# team w4
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	.include "src/gpio_regs.inc"
+   1              	# file: gpio_regs.inc
+   2              	# team w4
+   3              	# author: Justin Johnson, Tyler French
+   4              	
+   5              		.equ GPIOA_BASE, 0x40020000
+   6              		.equ GPIOB_BASE, 0x40020400
+   7              		.equ GPIOC_BASE, 0x40020800
+   8              		.equ GPIOD_BASE, 0x40020c00
+   9              		.equ GPIOE_BASE, 0x40021000
+  10              	
+  11              		.equ GPIO_MODER, 0x00
+  12              		.equ GPIO_OTYPER, 0x04
+  13              		.equ GPIO_OSPEEDR, 0x08
+  14              		.equ GPIO_PUPDR, 0x0c
+  15              		.equ GPIO_IDR, 0x10
+  16              		.equ GPIO_ODR, 0x14
+  17              		.equ GPIO_BSRR, 0x18
+  18              		.equ GPIO_LCKR, 0x1c
+  19              		.equ GPIO_AFRL, 0x20
+  20              		.equ GPIO_AFRH, 0x24
+  21              	
+  22              	
+   7              	
+   8              	  SET_TARGET
+   9              	
+  10              	  .text
+  11              	
+  12              	  FUNCTION SW_Init,global
+  13              	
+  14 0000 00B5     	    push {lr}
+  15              	
+  16 0002 FFF7FEFF 	    bl gpio_c_init              //initialize GPIO port A as input
+  17              	
+  18 0006 5DF804EB 	    pop {lr}
+  19              	
+  20 000a 7047     	    bx lr
+  21              	  
+  22              	  ENDFUNC SW_Init
+  23              	
+  24              	  FUNCTION SW_Get_A,global
+  25              	
+  26 000c 00B5     	    push {lr}
+  27              	
+  28 000e FFF7FEFF 	    bl gpio_c_get               //get all 32 bits of port A
+  29              	
+  30 0012 4FEAD000 	    lsr r0,#3                   //normalize bit 3
+  31              	
+  32 0016 0349     	    ldr r1,=#0x1             //create mask for bit 3
+  33              	
+  34 0018 00EA0100 	    and r0,r1                   //apply mask
+  35              	
+  36 001c 5DF804EB 	    pop {lr}
+  37              	
+  38 0020 7047     	    bx lr
+  39              	
+  40 0022 00000100 	  ENDFUNC SW_Get_A
+  40      0000
+  41              	
+  42              	  FUNCTION SW_Get_B,global
+  43              	
+  44 0028 00B5     	    push {lr}
+  45              	
+  46 002a FFF7FEFF 	    bl gpio_c_get           //get all 32 bits of input
+  47 002e 4FEA1020 	    lsr r0,#8
+  48 0032 0349     	    ldr r1,=#(~(~0<<4))     //create mask for bits
+  49 0034 00EA0100 	    and r0,r1               //islolate bits [11:8]
+  50              	
+  51 0038 5DF804EB 	    pop {lr}
+  52              	
+  53 003c 7047     	    bx lr
+  54              	
+  55 003e 00000F00 	  ENDFUNC SW_Get_B
+  55      0000
+  56              	
+  57              	  FUNCTION sw_get_index,global
+  58              	
+  59 0044 00B5     	    push {lr}
+  60              	
+  61 0046 FFF7FEFF 	    bl gpio_c_get           //get all 32 bits of input
+  62 004a 4FEA1030 	    lsr r0,#12              //Normalize Bits
+  63 004e 0349     	    ldr r1,=#(~(~0<<3))     //create mask for bits
+  64 0050 00EA0100 	    and r0,r1               //islolate bits [14:12]
+  65              	
+  66 0054 5DF804EB 	    pop {lr}
+  67              	
+  68 0058 7047     	    bx lr
+  69              	
+  70 005a 00000700 	  ENDFUNC sw_get_index
+  70      0000
+  71              	
+  72              	  FUNCTION sw_get_segments,global
+  73              	
+  74 0060 00B5     	    push {lr}
+  75              	
+  76 0062 FFF7FEFF 	    bl gpio_c_get           //get all 32 bits of input
+  77 0066 4FEA0000 	    lsr r0,#0               //No need to normalize
+  78 006a 0349     	    ldr r1,=#(~(~0<<7))     //create mask for bits
+  79 006c 00EA0100 	    and r0,r1               //islolate bits [6:0]
+  80              	
+  81 0070 5DF804EB 	    pop {lr}
+  82              	
+  83 0074 7047     	    bx lr
+  84              	
+  85 0076 00007F00 	  ENDFUNC sw_get_segments
+  85      0000
+  86              	
+  87              	  FUNCTION sw_get_hex,global
+  88              	
+  89 007c 00B5     	    push {lr}
+  90              	
+  91 007e FFF7FEFF 	    bl gpio_c_get           //get all 32 bits of input
+  92 0082 4FEAD010 	    lsr r0,#7               //Normalize
+  93 0086 0349     	    ldr r1,=#(~(~0<<4))     //create mask for bits
+  94 0088 00EA0100 	    and r0,r1               //islolate bits [10:7]
+  95              	
+  96 008c 5DF804EB 	    pop {lr}
+  97              	
+  98 0090 7047     	    bx lr
+  99              	
+ 100 0092 00000F00 	  ENDFUNC sw_get_hex
+ 100      0000
+ 101              	
+ 102              	  FUNCTION sw_get_latch,global
+ 103              	
+ 104 0098 00B5     	    push {lr}
+ 105              	
+ 106 009a FFF7FEFF 	    bl gpio_c_get           //get all 32 bits of input
+ 107 009e 4FEAD030 	    lsr r0,#15              //Normalize
+ 108 00a2 0349     	    ldr r1,=#(~(~0<<1))     //create mask for bits
+ 109 00a4 00EA0100 	    and r0,r1               //islolate bit [15]
+ 110              	
+ 111 00a8 5DF804EB 	    pop {lr}
+ 112              	
+ 113 00ac 7047     	    bx lr
+ 114              	
+ 115 00ae 00000100 	  ENDFUNC sw_get_latch
+ 115      0000
+ 116              	  
+ 117              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+ ./src/gpio_regs.inc:5      *ABS*:40020000 GPIOA_BASE
+ ./src/gpio_regs.inc:6      *ABS*:40020400 GPIOB_BASE
+ ./src/gpio_regs.inc:7      *ABS*:40020800 GPIOC_BASE
+ ./src/gpio_regs.inc:8      *ABS*:40020c00 GPIOD_BASE
+ ./src/gpio_regs.inc:9      *ABS*:40021000 GPIOE_BASE
+ ./src/gpio_regs.inc:11     *ABS*:00000000 GPIO_MODER
+ ./src/gpio_regs.inc:12     *ABS*:00000004 GPIO_OTYPER
+ ./src/gpio_regs.inc:13     *ABS*:00000008 GPIO_OSPEEDR
+ ./src/gpio_regs.inc:14     *ABS*:0000000c GPIO_PUPDR
+ ./src/gpio_regs.inc:15     *ABS*:00000010 GPIO_IDR
+ ./src/gpio_regs.inc:16     *ABS*:00000014 GPIO_ODR
+ ./src/gpio_regs.inc:17     *ABS*:00000018 GPIO_BSRR
+ ./src/gpio_regs.inc:18     *ABS*:0000001c GPIO_LCKR
+ ./src/gpio_regs.inc:19     *ABS*:00000020 GPIO_AFRL
+ ./src/gpio_regs.inc:20     *ABS*:00000024 GPIO_AFRH
+            src/SW.s:12     .text:00000000 SW_Init
+            src/SW.s:12     .text:00000000 $t
+            src/SW.s:24     .text:0000000c SW_Get_A
+            src/SW.s:40     .text:00000022 $d
+            src/SW.s:42     .text:00000028 SW_Get_B
+            src/SW.s:42     .text:00000028 $t
+            src/SW.s:55     .text:0000003e $d
+            src/SW.s:57     .text:00000044 sw_get_index
+            src/SW.s:57     .text:00000044 $t
+            src/SW.s:70     .text:0000005a $d
+            src/SW.s:72     .text:00000060 sw_get_segments
+            src/SW.s:72     .text:00000060 $t
+            src/SW.s:85     .text:00000076 $d
+            src/SW.s:87     .text:0000007c sw_get_hex
+            src/SW.s:87     .text:0000007c $t
+            src/SW.s:100    .text:00000092 $d
+            src/SW.s:102    .text:00000098 sw_get_latch
+            src/SW.s:102    .text:00000098 $t
+            src/SW.s:115    .text:000000ae $d
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+gpio_c_init
+gpio_c_get

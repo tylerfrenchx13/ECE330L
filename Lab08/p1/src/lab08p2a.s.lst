@@ -1,0 +1,73 @@
+   1              	# file: lab08p2a.s
+   2              	# authors:  Justin Johnson, Tyler French
+   3              	# Team: w4
+   4              	
+   5              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   6              	
+   7              	  SET_TARGET
+   8              	
+   9              	  .text
+  10              	
+  11              	  FUNCTION main,global
+  12              	
+  13 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  14              	
+  15 0002 0C4F     	    ldr r7,=SEG7HEX           //establish addressability to array
+  16              	
+  17 0004 FFF7FEFF 	    bl gpio_c_init            //initialize ports
+  18 0008 FFF7FEFF 	    bl gpio_d_init
+  19 000c FFF7FEFF 	    bl seg7_init
+  20              	
+  21              	    while:
+  22 0010 FFF7FEFF 	      bl sw_get_index         //set LED's with corresponding switches
+  23 0014 FFF7FEFF 	      bl led_put_index
+  24              	
+  25 0018 FFF7FEFF 	      bl sw_get_hex           //retrieve for param2
+  26 001c 0446     	      mov r4,r0               //save param in r4
+  27 001e 3D5D     	      ldrb r5,[r7,r4]         //load into r4 index (r4) at array (r7)
+  28 0020 FFF7FEFF 	      bl sw_get_index         //retrieve for param1 & store in r0
+  29              	                                                  //r0                r1
+  30 0024 2946     	      mov r1,r5               //set param2 as r1 (previously saved in r4)
+  31 0026 FFF7FEFF 	      bl seg7_put             //void seg7put(unsigned int segid, unsigned int segments);
+  32              	
+  33 002a F1E7     	      b while
+  34              	
+  35              	    all_done:
+  36              	    
+  37 002c BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  38              	
+  39 0030 7047     	    bx lr
+  40              	  
+  41 0032 00000000 	  ENDFUNC main
+  41      0000
+  42              	
+  43              	  .data
+  44              	
+  45              	
+  46              	          //array: [0-9,a-f]
+  47 0000 40792430 	SEG7HEX:  .byte 0x40,0x79,0x24,0x30,0x19,0x12,0x2,0x78
+  47      19120278 
+  48 0008 00100803 	          .byte 0x0,0x10,0x8,0x3,0x46,0x21,0x6,0xe
+  48      4621060E 
+  49              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm4
+      src/lab08p2a.s:11     .text:00000000 main
+      src/lab08p2a.s:11     .text:00000000 $t
+      src/lab08p2a.s:47     .data:00000000 SEG7HEX
+      src/lab08p2a.s:21     .text:00000010 while
+      src/lab08p2a.s:35     .text:0000002c all_done
+      src/lab08p2a.s:41     .text:00000032 $d
+                   .debug_aranges:0000000c $d
+
+UNDEFINED SYMBOLS
+gpio_c_init
+gpio_d_init
+seg7_init
+sw_get_index
+led_put_index
+sw_get_hex
+seg7_put
