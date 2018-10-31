@@ -1,0 +1,37 @@
+   1              	# file: prog1.s
+   2              	# Team w4
+   3              	
+   4              	.include "macros.inc"
+   1              	# file: macros.inc
+   2              	
+  34              	  .list
+   5              	
+   6              	  SET_TARGET
+   7              	
+   8              	  FUNCTION main,global
+   9              	
+  10 0000 F0B5     	    push {r4,r5,r6,r7,lr}
+  11              	
+  12 0002 034C     	    ldr  r4,=0x11223344 //Loads hex value into r4
+  13 0004 034D     	    ldr  r5,=0x55667788 //Loads hex value into r5
+  14 0006 04EB0502 	    add  r2,r4,r5 //Adds contents of r5 and r4, stores into r2
+  15              	
+  16              	    all_done:
+  17              	    
+  18 000a BDE8F040 	    pop {r4,r5,r6,r7,lr}
+  19              	
+  20 000e 7047     	    bx lr
+  21              	  
+  22 0010 44332211 	  ENDFUNC main
+  22      88776655 
+  23              	
+  24              	  .end
+DEFINED SYMBOLS
+                            *ABS*:00000001 ctxm3
+         src/prog1.s:8      .text:00000000 main
+         src/prog1.s:8      .text:00000000 $t
+         src/prog1.s:16     .text:0000000a all_done
+         src/prog1.s:22     .text:00000010 $d
+                   .debug_aranges:0000000c $d
+
+NO UNDEFINED SYMBOLS

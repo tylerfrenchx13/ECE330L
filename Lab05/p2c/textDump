@@ -1,0 +1,178 @@
+$ arm-none-eabi-objdump -s -t --section=.text  bin/p2c.elf
+
+bin/p2c.elf:     file format elf32-littlearm
+
+SYMBOL TABLE:
+08000188 l    d  .text	00000000 .text
+08000200 l     F .text	00000002 Default_Handler
+08000200 l       .text	00000000 Infinite_Loop
+080004c0 l     O .text	00000000 __EH_FRAME_BEGIN__
+08000188 l     F .text	00000000 __do_global_dtors_aux
+080001ac l     F .text	00000000 frame_dummy
+080001f8 l       .text	00000000 DS
+080001f8 l       .text	00000000 A
+080001fc l       .text	00000000 B
+080001f0 l       .text	00000000 all_done
+0800020a l       .text	00000000 loop_data
+0800021e l       .text	00000000 bloop
+080003a0 l     F .text	00000014 register_fini
+08000200  w    F .text	00000002 RTC_Alarm_IRQHandler
+08000200  w    F .text	00000002 HASH_RNG_IRQHandler
+08000200  w    F .text	00000002 EXTI2_IRQHandler
+08000200  w    F .text	00000002 TIM8_CC_IRQHandler
+08000200  w    F .text	00000002 DebugMon_Handler
+08000200  w    F .text	00000002 TIM1_CC_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream5_IRQHandler
+08000200  w    F .text	00000002 HardFault_Handler
+08000200  w    F .text	00000002 DMA1_Stream5_IRQHandler
+08000200  w    F .text	00000002 SysTick_Handler
+08000200  w    F .text	00000002 PVD_IRQHandler
+08000200  w    F .text	00000002 SDIO_IRQHandler
+08000200  w    F .text	00000002 TAMP_STAMP_IRQHandler
+08000200  w    F .text	00000002 PendSV_Handler
+08000200  w    F .text	00000002 NMI_Handler
+08000200  w    F .text	00000002 CAN2_RX1_IRQHandler
+08000200  w    F .text	00000002 EXTI3_IRQHandler
+08000200  w    F .text	00000002 TIM8_TRG_COM_TIM14_IRQHandler
+08000200  w    F .text	00000002 TIM1_UP_TIM10_IRQHandler
+080004d8 g       .text	00000000 _etext
+08000200  w    F .text	00000002 TIM8_UP_TIM13_IRQHandler
+08000200  w    F .text	00000002 I2C3_ER_IRQHandler
+08000200  w    F .text	00000002 EXTI0_IRQHandler
+08000200  w    F .text	00000002 I2C2_EV_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream2_IRQHandler
+08000200  w    F .text	00000002 CAN1_RX0_IRQHandler
+08000200  w    F .text	00000002 FPU_IRQHandler
+08000200  w    F .text	00000002 OTG_HS_WKUP_IRQHandler
+08000200  w    F .text	00000002 UsageFault_Handler
+08000200  w    F .text	00000002 CAN2_SCE_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream2_IRQHandler
+08000200  w    F .text	00000002 SPI1_IRQHandler
+08000200  w    F .text	00000002 TIM6_DAC_IRQHandler
+08000200  w    F .text	00000002 TIM1_BRK_TIM9_IRQHandler
+08000200  w    F .text	00000002 DCMI_IRQHandler
+08000200  w    F .text	00000002 CAN2_RX0_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream3_IRQHandler
+080004bc g     O .text	00000004 _global_impure_ptr
+080002ac g     F .text	00000050 __libc_init_array
+08000200  w    F .text	00000002 USART6_IRQHandler
+080004c0 g     F .text	00000000 _init
+08000200  w    F .text	00000002 USART3_IRQHandler
+08000200  w    F .text	00000002 CRYP_IRQHandler
+08000488 g     F .text	0000002c __libc_fini_array
+08000204 g     F .text	00000058 Reset_Handler
+08000200  w    F .text	00000002 CAN1_RX1_IRQHandler
+08000200  w    F .text	00000002 UART5_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream0_IRQHandler
+08000200  w    F .text	00000002 TIM4_IRQHandler
+08000200  w    F .text	00000002 I2C1_EV_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream6_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream1_IRQHandler
+08000200  w    F .text	00000002 UART4_IRQHandler
+08000200  w    F .text	00000002 TIM3_IRQHandler
+08000200  w    F .text	00000002 RCC_IRQHandler
+08000200  w    F .text	00000002 TIM8_BRK_TIM12_IRQHandler
+080003b4 g     F .text	000000d4 __call_exitprocs
+08000200  w    F .text	00000002 EXTI15_10_IRQHandler
+080002fc g     F .text	000000a4 __register_exitproc
+08000200  w    F .text	00000002 ADC_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream7_IRQHandler
+08000200  w    F .text	00000002 TIM7_IRQHandler
+08000200  w    F .text	00000002 CAN2_TX_IRQHandler
+08000200  w    F .text	00000002 TIM5_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream7_IRQHandler
+08000200  w    F .text	00000002 I2C3_EV_IRQHandler
+08000200  w    F .text	00000002 EXTI9_5_IRQHandler
+08000200  w    F .text	00000002 RTC_WKUP_IRQHandler
+08000200  w    F .text	00000002 ETH_WKUP_IRQHandler
+08000200  w    F .text	00000002 SPI2_IRQHandler
+08000200  w    F .text	00000002 OTG_HS_EP1_IN_IRQHandler
+08000200  w    F .text	00000002 MemManage_Handler
+080001e4 g     F .text	0000001c main
+08000200  w    F .text	00000002 DMA1_Stream0_IRQHandler
+08000200  w    F .text	00000002 CAN1_TX_IRQHandler
+08000200  w    F .text	00000002 SVC_Handler
+08000200  w    F .text	00000002 EXTI4_IRQHandler
+080004cc g     F .text	00000000 _fini
+08000280 g     F .text	0000000c atexit
+08000200  w    F .text	00000002 FSMC_IRQHandler
+08000200  w    F .text	00000002 ETH_IRQHandler
+08000200  w    F .text	00000002 OTG_HS_EP1_OUT_IRQHandler
+08000200  w    F .text	00000002 WWDG_IRQHandler
+08000200  w    F .text	00000002 TIM2_IRQHandler
+08000200  w    F .text	00000002 OTG_FS_WKUP_IRQHandler
+08000200  w    F .text	00000002 TIM1_TRG_COM_TIM11_IRQHandler
+08000200  w    F .text	00000002 OTG_HS_IRQHandler
+08000200  w    F .text	00000002 EXTI1_IRQHandler
+08000200  w    F .text	00000002 USART2_IRQHandler
+0800028c g     F .text	00000020 exit
+08000200  w    F .text	00000002 I2C2_ER_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream1_IRQHandler
+08000200  w    F .text	00000002 CAN1_SCE_IRQHandler
+08000200  w    F .text	00000002 FLASH_IRQHandler
+080004b4 g     F .text	00000002 _exit
+08000200  w    F .text	00000002 DMA2_Stream4_IRQHandler
+08000200  w    F .text	00000002 BusFault_Handler
+08000200  w    F .text	00000002 USART1_IRQHandler
+08000200  w    F .text	00000002 OTG_FS_IRQHandler
+08000200  w    F .text	00000002 SPI3_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream4_IRQHandler
+08000200  w    F .text	00000002 I2C1_ER_IRQHandler
+08000200  w    F .text	00000002 DMA2_Stream6_IRQHandler
+08000200  w    F .text	00000002 DMA1_Stream3_IRQHandler
+
+
+Contents of section .text:
+ 8000188 10b5054c 237833b9 044b13b1 0448aff3  ...L#x3..K...H..
+ 8000198 00800123 237010bd 28040020 00000000  ...##p..(.. ....
+ 80001a8 c0040008 084b10b5 1bb10848 0849aff3  .....K.....H.I..
+ 80001b8 00800848 036803b9 10bd074b 002bfbd0  ...H.h.....K.+..
+ 80001c8 bde81040 184700bf 00000000 c0040008  ...@.G..........
+ 80001d8 2c040020 28040020 00000000 f0b504a4  ,.. (.. ........
+ 80001e8 b4f80050 d4f80460 bde8f040 7047aaaa  ...P...`...@pG..
+ 80001f8 cdabaaaa 78563412 fee700bf 1549164a  ....xV4......I.J
+ 8000208 164b9a42 bebf51f8 040b42f8 040bf8e7  .K.B..Q...B.....
+ 8000218 00201349 134a9142 3cbf41f8 040bfae7  . .I.J.B<.A.....
+ 8000228 00f040f8 0a4800f0 27f80f48 002818bf  ..@..H..'..H.(..
+ 8000238 80470e4b 0e4a1a60 0e4b196b 4ff01f02  .G.K.J.`.K.kO...
+ 8000248 41ea0201 1963fff7 c9ff00f0 1bf87047  A....c........pG
+ 8000258 cd040008 e4040008 00000020 28040020  ........... (.. 
+ 8000268 28040020 44040020 00000000 14ed00e0  (.. D.. ........
+ 8000278 18000000 00380240 01460020 02460346  .....8.@.F. .F.F
+ 8000288 00f038b8 08b50021 044600f0 8ff8044b  ..8....!.F.....K
+ 8000298 1868c36b 03b19847 204600f0 07f900bf  .h.k...G F......
+ 80002a8 bc040008 70b50f4e 0f4d761b b61018bf  ....p..N.Mv.....
+ 80002b8 002405d0 013455f8 043b9847 a642f9d1  .$...4U..;.G.B..
+ 80002c8 0a4e0b4d 761b00f0 f7f8b610 18bf0024  .N.Mv..........$
+ 80002d8 06d00134 55f8043b 9847a642 f9d170bd  ...4U..;.G.B..p.
+ 80002e8 70bd00bf d8040008 d8040008 e0040008  p...............
+ 80002f8 d8040008 2de9f047 254c2568 d5f84841  ....-..G%L%h..HA
+ 8000308 06468846 92469946 ccb36068 1f2818dc  .F.F.F.F..`h.(..
+ 8000318 431c7eb1 04eb8005 0121c5f8 88a0d4f8  C.~......!......
+ 8000328 887101fa 00f21743 022ec4f8 8871c5f8  .q.....C.....q..
+ 8000338 08911ed0 02306360 44f82080 0020bde8  .....0c`D. .. ..
+ 8000348 f087144b 03b34ff4 c870aff3 00800446  ...K..O..p.....F
+ 8000358 d0b1d5f8 48310027 80e88800 c5f84841  ....H1.'......HA
+ 8000368 38460123 c4f88871 c4f88c71 002ee1d0  8F.#...q...q....
+ 8000378 d0e7d4f8 8c110a43 c4f88c21 dae705f5  .......C...!....
+ 8000388 a674c5f8 4841c0e7 4ff0ff30 bde8f087  .t..HA..O..0....
+ 8000398 bc040008 00000000 024b13b1 0248fff7  .........K...H..
+ 80003a8 6bbf7047 00000000 89040008 2de9f04f  k.pG........-..O
+ 80003b8 314b83b0 1b680093 03f5a473 81460e46  1K...h.....s.F.F
+ 80003c8 0193009b d3f84871 27b3ddf8 04a07c68  ......Hq'.....|h
+ 80003d8 651e0ed4 013407eb 84044ff0 0008e6b1  e....4....O.....
+ 80003e8 d4f80031 b34218d0 013d6b1c a4f10404  ...1.B...=k.....
+ 80003f8 f5d1224b 73b17b68 002b36d1 3b68002b  .."Ks.{h.+6.;h.+
+ 8000408 34d03846 caf80030 aff30080 daf80070  4.8F...0.......p
+ 8000418 002fdcd1 03b0bde8 f08f7b68 2268013b  ./........{h"h.;
+ 8000428 ab420cbf 7d60c4f8 0080002a dcd0d7f8  .B..}`.....*....
+ 8000438 8831d7f8 04b00121 a9401942 08d19047  .1.....!.@.B...G
+ 8000448 7b685b45 bdd1daf8 0030bb42 ccd0b8e7  {h[E.....0.B....
+ 8000458 d7f88c31 194204d1 4846d4f8 80109047  ...1.B..HF.....G
+ 8000468 eee7d4f8 80009047 eae73b68 ba461f46  .......G..;h.F.F
+ 8000478 002facd1 cee700bf bc040008 00000000  ./..............
+ 8000488 38b5084b 084ded1a ac1018bf ed1805d0  8..K.M..........
+ 8000498 013c55f8 043d9847 002cf9d1 bde83840  .<U..=.G.,....8@
+ 80004a8 00f010b8 e0040008 e4040008 fee700bf  ................
+ 80004b8 43000000 00000020 f8b500bf f8bc08bc  C...... ........
+ 80004c8 9e467047 f8b500bf f8bc08bc 9e467047  .FpG.........FpG
