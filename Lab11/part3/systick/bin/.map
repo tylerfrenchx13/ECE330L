@@ -439,14 +439,14 @@ OUTPUT(bin/systick.elf elf32-littlearm)
  .debug_line    0x000001ee       0x43 bin/f4_vector.o
  .debug_line    0x00000231       0x75 bin/f4_reset.o
 
-.debug_info     0x00000000      0x2ab
+.debug_info     0x00000000      0x2b7
  .debug_info    0x00000000       0x60 bin/main_asm.o
  .debug_info    0x00000060       0x63 bin/SetSysClock.o
  .debug_info    0x000000c3       0x66 bin/SysTick_Config.o
  .debug_info    0x00000129       0x5e bin/gpio_d.o
  .debug_info    0x00000187       0x5b bin/rcc.o
- .debug_info    0x000001e2       0x65 bin/f4_vector.o
- .debug_info    0x00000247       0x64 bin/f4_reset.o
+ .debug_info    0x000001e2       0x6b bin/f4_vector.o
+ .debug_info    0x0000024d       0x6a bin/f4_reset.o
 
 .debug_abbrev   0x00000000       0x8c
  .debug_abbrev  0x00000000       0x14 bin/main_asm.o
