@@ -19,9 +19,7 @@ int main()
   
     SysTick_Config(reload_value);         //configure SysTick System Timer
   
-  do { 
-    
-  } while (1);                          //loop forever
+   while (1);                          //loop forever
 
   return 0;
 }
